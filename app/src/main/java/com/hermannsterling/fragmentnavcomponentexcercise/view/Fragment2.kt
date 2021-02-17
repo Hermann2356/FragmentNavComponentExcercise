@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.hermannsterling.fragmentnavcomponentexcercise.databinding.FragmentTwoBinding
+import kotlin.math.floor
 
 class Fragment2 : Fragment() {
     private lateinit var binding: FragmentTwoBinding
@@ -23,17 +24,32 @@ class Fragment2 : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
         binding.tvDisplay.text = arguments.input
+        val textLength = binding.tvDisplay.text.length
+        var input = ""
 
         binding.btnFirstHalf.setOnClickListener {
-
-            val input = binding.tvDisplay.text.toString()
-                .substring(binding.tvDisplay.text.length / 2)
+            if (textLength == 2)
+                input = binding.tvDisplay.text.first().toString()
+            else {
+                input = binding.tvDisplay.text.toString()
+                    .substring(0, binding.tvDisplay.text.length / 2)
+            }
             val action = Fragment2Directions.actionFragment2ToFragment3(input)
             findNavController().navigate(action)
         }
+
+        binding.btnSecondHalf.setOnClickListener {
+            if (textLength == 2)
+                input = binding.tvDisplay.text.substring(1)
+            else {
+                input = binding.tvDisplay.text.toString()
+                    .substring(binding.tvDisplay.text.length / 2)
+            }
+            val action = Fragment2Directions.actionFragment2ToFragment3(input)
+            findNavController().navigate(action)
+        }
+
 
         binding.btnSecondHalf.setOnClickListener {
 
